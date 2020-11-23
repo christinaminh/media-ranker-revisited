@@ -3,7 +3,9 @@ require "test_helper"
 describe UsersController do
   describe "login" do
     it "can log in an existing user" do
-      user = perform_login(users(:ada))
+      expect{
+        perform_login(users(:ada))
+      }.wont_change "User.count"
 
       must_respond_with :redirect
     end
@@ -12,7 +14,7 @@ describe UsersController do
       new_user = User.new(uid: "123", username: "username123", provider: "github", email: "someuser@gmail.com")
 
       expect {
-        logged_in_user = perform_login(new_user)
+        perform_login(new_user)
       }.must_change "User.count", 1
 
       must_respond_with :redirect
