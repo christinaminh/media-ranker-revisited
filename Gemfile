@@ -76,3 +76,10 @@ group :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
 end
+
+group :development, :test do
+  gem 'dotenv-rails'
+end
+
+gem "omniauth"
+gem "omniauth-github"
