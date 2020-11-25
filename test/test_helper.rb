@@ -47,4 +47,9 @@ class ActiveSupport::TestCase
     return user
   end
 
+  def perform_logout
+    delete logout_path, params: {}
+
+    expect(session[:user_id]).must_be_nil
+  end
 end
