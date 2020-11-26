@@ -179,7 +179,7 @@ describe WorksController do
       end
 
       it "redirects after the user has logged out" do
-        delete logout_path
+        perform_logout
 
         expect{
           post upvote_path(existing_work)
@@ -199,6 +199,14 @@ describe WorksController do
         expect(vote.valid?).must_equal false
         expect(vote.errors.messages[:user]).must_include "has already voted for this work"
         must_redirect_to work_path(existing_work)
+      end
+
+      it "doesn't vote if work doesn't exist" do
+        expect{
+          post upvote_path(-1)
+        }.wont_change "Vote.count"
+
+        must_respond_with :not_found
       end
     end
   end
